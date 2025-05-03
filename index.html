@@ -58,11 +58,13 @@
 
   <script>
     // Example CSV data - replace with actual fetch or upload logic
-    const csvData = `Name,Status,Stop
-CCHCS UTOX Screen-374594,Ordered,2/11/2024
-Consult to Addiction Medicine Central Team 60,Ordered,2/7/2024
-Consult to ISUDT Behavioral Health 30,Ordered,2/7/2024
-Referral to Endocrinology Evaluation,Ordered,2/6/2024`;
+    fetch('data.csv')
+      .then(response => response.text())
+      .then(csvData => {
+        const parsedRows = parseCSV(csvData);
+        populateTable(parsedRows);
+      });
+
 
     function parseCSV(data) {
       const lines = data.trim().split('\n');

@@ -102,6 +102,7 @@
     let dmeDetails = [];
 
     // Load both CSVs safely
+    /*
     Promise.all([
       fetch('DME_list.csv').then(res => res.text()),
       fetch('data.csv').then(res => res.text())
@@ -110,6 +111,7 @@
       const rows = parseCSV(dataCSV);
       populateTable(rows);
     });
+    */
 
     function parseCSV(data) {
       const lines = data.trim().split(/\r?\n/);

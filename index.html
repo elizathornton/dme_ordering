@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DME Menu Table</title>
   <style>
     body {
@@ -55,8 +56,6 @@
     </label>
   </div>
 
-  <!-- your table and script go here -->
-
   <h2>DME Menu</h2>
   <table id="dmeTable">
     <thead>
@@ -73,18 +72,16 @@
   </table>
 
   <script>
-    // Example CSV data - replace with actual fetch or upload logic
     fetch('data.csv')
       .then(response => response.text())
       .then(csvData => {
         const parsedRows = parseCSV(csvData);
         populateTable(parsedRows);
-      });
-
+      })
+      .catch(error => console.error('Error loading CSV:', error));
 
     function parseCSV(data) {
       const lines = data.trim().split('\n');
-      const headers = lines[0].split(',');
       const rows = lines.slice(1).map(line => line.split(','));
       return rows;
     }
@@ -100,7 +97,6 @@
           tr.appendChild(td);
         });
 
-        // Add Action buttons
         const actionTd = document.createElement('td');
         actionTd.classList.add('action-buttons');
 
@@ -122,9 +118,6 @@
         tbody.appendChild(tr);
       });
     }
-
-//    const parsedRows = parseCSV(csvData);
-//    populateTable(parsedRows);
   </script>
 </body>
 </html>

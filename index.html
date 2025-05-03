@@ -166,5 +166,93 @@
         const tr = document.createElement('tr');
 
         // Name cell with status bar and info icon
-        const
+        const nameTd = document.createElement('td');
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'row-container';
 
+        const color = getColorByStatus(row.Status);
+
+        const bar = document.createElement('div');
+        bar.className = 'status-bar';
+        bar.style.backgroundColor = color;
+
+        const infoIcon = document.createElement('div');
+        infoIcon.className = 'info-icon';
+        infoIcon.style.backgroundColor = color;
+        infoIcon.textContent = 'i';
+        infoIcon.onclick = (e) => {
+          e.stopPropagation(); // prevent body click from hiding it immediately
+          const detail = dmeDetails.find(d => d['Item'] === row.Name);
+          if (detail) {
+            infoBox.style.display = 'block';
+            infoBox.style.top = `${e.pageY + 10}px`;
+            infoBox.style.left = `${e.pageX + 10}px`;
+            infoBox.innerHTML = `<strong>${row.Name}</strong><br><small>${detail['Subcategory 1'] || ''}, ${detail['Subcategory 2'] || ''}</small><br><br>` +
+              `<div style="font-size: 13px;">${detail.Description || ''}<br><br>
+                <strong>Brand:</strong> ${detail.Brand || ''}<br>
+                <strong>Image:</strong> ${detail.Image || ''}<br>
+                <strong>Indications:</strong> ${detail['Indications'] || ''}<br>
+                <strong>Clinical Actions:</strong> ${detail['Clinical Actions'] || ''}<br>
+                <strong>Workflow Actions:</strong> ${detail['Workflow Actions'] || ''}</div>`;
+          } else {
+            infoBox.style.display = 'block';
+            infoBox.style.top = `${e.pageY + 10}px`;
+            infoBox.style.left = `${e.pageX + 10}px`;
+            infoBox.innerHTML = `<strong>${row.Name}</strong><br><small>No details found.</small>`;
+          }
+        };
+
+        rowDiv.appendChild(infoIcon);
+        rowDiv.appendChild(bar);
+
+        const nameContent = document.createElement('div');
+        nameContent.innerHTML = `<div>${row.Name}</div><div style="font-size: 13px; color: #aaa;">Loading subcategories...</div>`;
+        rowDiv.appendChild(nameContent);
+
+        nameTd.appendChild(rowDiv);
+        tr.appendChild(nameTd);
+
+        // Status
+        const statusTd = document.createElement('td');
+        statusTd.textContent = row.Status;
+        tr.appendChild(statusTd);
+
+        // Stop
+        const stopTd = document.createElement('td');
+        stopTd.textContent = row.Stop;
+        tr.appendChild(stopTd);
+
+        // Actions
+        const actionTd = document.createElement('td');
+        actionTd.className = 'action-buttons';
+
+        ['DC', 'Patient Has', 'Does Not Have', 'Damaged'].forEach(action => {
+          const btn = document.createElement('button');
+          btn.textContent = action;
+          if (action === 'DC') btn.classList.add('dc');
+          else if (action === 'Patient Has') btn.classList.add('has');
+          else if (action === 'Does Not Have') btn.classList.add('lost');
+          else if (action === 'Damaged') btn.classList.add('damaged');
+          actionTd.appendChild(btn);
+        });
+
+        tr.appendChild(actionTd);
+        tbody.appendChild(tr);
+
+        // Load subcategories into 2nd line
+        const detail = dmeDetails.find(d => d['Item'] === row.Name);
+        if (detail) {
+          nameContent.children[1].textContent = `${detail['Subcategory 1'] || ''}, ${detail['Subcategory 2'] || ''}`;
+        }
+      });
+
+      // Single click handler outside loop
+      document.body.onclick = (e) => {
+        if (!e.target.classList.contains('info-icon')) {
+          infoBox.style.display = 'none';
+        }
+      };
+    }
+  </script>
+</body>
+</html>

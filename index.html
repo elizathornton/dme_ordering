@@ -41,6 +41,23 @@
   </style>
 </head>
 <body>
+  <div style="padding: 1rem; background-color: #1a1a1a; color: white;">
+    <h2>Order New DME</h2>
+    <input
+      type="text"
+      id="dmeSearch"
+      placeholder="Search for DME..."
+      style="padding: 8px; margin-right: 10px; border-radius: 4px; border: none; width: 200px;"
+    />
+    <label style="background-color: #007bff; color: white; padding: 8px 12px; border-radius: 4px; cursor: pointer;">
+      Browse
+      <input type="file" style="display: none;" id="fileUpload" />
+    </label>
+  </div>
+
+  <!-- your table and script go here -->
+
+<body>
   <h2>DME Menu</h2>
   <table id="dmeTable">
     <thead>
@@ -91,7 +108,7 @@
         const buttons = [
           { class: 'dc', text: 'DC' },
           { class: 'has', text: 'Patient Has' },
-          { class: 'lost', text: 'Lost Stolen' },
+          { class: 'lost', text: 'Does Not Have' },
           { class: 'damaged', text: 'Damaged' }
         ];
 
